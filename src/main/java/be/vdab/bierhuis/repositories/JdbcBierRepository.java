@@ -26,7 +26,7 @@ public class JdbcBierRepository implements BierRepository {
     JdbcBierRepository(JdbcTemplate template) {
         this.template = template;
         this.insert = new SimpleJdbcInsert(template);
-        insert.withTableName("pizzas");
+        insert.withTableName("bieren");
         insert.usingGeneratedKeyColumns("id");
     }
 
@@ -56,7 +56,7 @@ public class JdbcBierRepository implements BierRepository {
     public long create(Bier bier) {
         Map<String, Object> kolomWaarden = new HashMap<>();
         kolomWaarden.put("naam", bier.getNaam());
-        kolomWaarden.put("brouwrid", bier.getBrouwerId());
+        kolomWaarden.put("brouwerid", bier.getBrouwerId());
         kolomWaarden.put("soortid", bier.getSoortId());
         kolomWaarden.put("alcohol", bier.getAlcohol());
         kolomWaarden.put("prijs", bier.getPrijs());
