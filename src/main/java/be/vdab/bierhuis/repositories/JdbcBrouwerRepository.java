@@ -2,13 +2,16 @@ package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Adres;
 import be.vdab.bierhuis.domain.Brouwer;
+import be.vdab.bierhuis.exceptions.BrouwerNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -24,7 +27,7 @@ public class JdbcBrouwerRepository implements BrouwerRepository {
     JdbcBrouwerRepository(JdbcTemplate template) {
         this.template = template;
         this.insert = new SimpleJdbcInsert(template);
-        insert.withTableName("pizzas");
+        insert.withTableName("brouwers");
         insert.usingGeneratedKeyColumns("id");
     }
 
@@ -46,14 +49,24 @@ public class JdbcBrouwerRepository implements BrouwerRepository {
 
     @Override
     public long create(Brouwer brouwer) {
-        //TODO: create has to be implemented
-        throw new UnsupportedOperationException();
+        Map<String, Object> kolomWaarden = new HashMap<>();
+        kolomWaarden.put("naam", brouwer.getNaam());
+        kolomWaarden.put("straat", brouwer.getAdres().getStraat());
+        kolomWaarden.put("huisNr", brouwer.getAdres().getHuisnummer());
+        kolomWaarden.put("postcode", brouwer.getAdres().getPostcode());
+        kolomWaarden.put("gemeente", brouwer.getAdres().getGemeente());
+        kolomWaarden.put("omzet", brouwer.getOmzet());
+        Number id = insert.executeAndReturnKey(kolomWaarden);
+        return id.longValue();
     }
 
     @Override
     public void update(Brouwer brouwer) {
-        //TODO: update has to be implemented
-        throw new UnsupportedOperationException();
+        String sql = "update brouwers set naam = ?, straat = ?, huisNr = ?, postcode = ?, gemeente = ?, omzet = ? where id = ?";
+        if (template.update(sql, brouwer.getNaam(), brouwer.getAdres().getStraat(), brouwer.getAdres().getHuisnummer(),
+                brouwer.getAdres().getPostcode(), brouwer.getAdres().getGemeente(), brouwer.getOmzet(), brouwer.getId()) == 0) {
+            throw new BrouwerNietGevondenException();
+        }
     }
 
     @Override

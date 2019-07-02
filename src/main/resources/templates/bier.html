@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments::head(title = ${bier} == null ? 'Bier niet gevonden' : ${bier.naam})">
+    </head>
 
-</body>
+    <body>
+        <nav th:replace="fragments::menu"></nav>
+        <h1 th:if="${bier} == null">Snack niet gevonden:
+            <span th:text="${id}"></span>
+        </h1>
+        <div th:if="${bier} != null" th:object="${bier}">
+            <h1 th:text="*{naam}"></h1>
+            <dl>
+                <dt>Alcohol</dt>
+                <dd th:text="*{{alcohol + ' %'}}"></dd>
+                <dt>Prijs</dt>
+                <dd th:text="*{{prijs + ' €'}}"></dd>
+            </dl>
+        </div>
+
+        <p>Aantal</p>
+    </body>
 </html>
