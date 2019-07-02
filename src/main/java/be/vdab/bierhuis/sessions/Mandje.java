@@ -27,7 +27,7 @@ public class Mandje implements Serializable {
     }
 
     public boolean isGevuld() {
-        return ! bieren.isEmpty();
+        return !bieren.isEmpty();
     }
 
     public Optional<Integer> getAantal(long id) {
