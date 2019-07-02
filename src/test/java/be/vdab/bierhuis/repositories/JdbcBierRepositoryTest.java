@@ -58,7 +58,7 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     @Test
     public void update() {
         long id = idVanTestBier();
-        Bier bier = new Bier(0, "test", 1, 2, 7.4F, BigDecimal.valueOf(22), 0);
+        Bier bier = new Bier(id, "test", 1, 2, 7.4F, BigDecimal.ONE, 0);
         repository.update(bier);
         assertThat(super.jdbcTemplate.queryForObject(
                 "select prijs from bieren where id = ?", BigDecimal.class, id)).isOne();
