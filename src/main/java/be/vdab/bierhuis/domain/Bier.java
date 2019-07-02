@@ -10,14 +10,16 @@ public class Bier {
     private String naam;
     private long brouwerId;
     private long soortId;
+    private float alcohol;
     private BigDecimal prijs;
     private long besteld;
 
-    public Bier(long id, @NotBlank String naam, long brouwerId, long soortId, BigDecimal prijs, long besteld) {
+    public Bier(long id, @NotBlank String naam, long brouwerId, long soortId, float alcohol, BigDecimal prijs, long besteld) {
         this.id = id;
         this.naam = naam;
         this.brouwerId = brouwerId;
         this.soortId = soortId;
+        this.alcohol = alcohol;
         this.prijs = prijs;
         this.besteld = besteld;
     }
@@ -36,6 +38,10 @@ public class Bier {
 
     public long getSoortId() {
         return soortId;
+    }
+
+    public float getAlcohol() {
+        return alcohol;
     }
 
     public BigDecimal getPrijs() {

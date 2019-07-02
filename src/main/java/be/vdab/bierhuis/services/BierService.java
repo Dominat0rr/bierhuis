@@ -1,11 +1,11 @@
-package be.vdab.bierhuis.repositories;
+package be.vdab.bierhuis.services;
 
 import be.vdab.bierhuis.domain.Bier;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BierRepository {
+public interface BierService {
     List<Bier> findAll();
     Optional<Bier> findById(long id);
     List<Bier> findAllByBrouwerId(long id);

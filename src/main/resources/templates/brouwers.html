@@ -6,8 +6,8 @@
         <nav th:replace="fragments::menu"></nav>
         <h1>Brouwers</h1>
         <ul class="zebra">
-            <li th:each="snack:${brouwers}" th:object="${brouwer}">
-                <a th:href="@{/brouwers/{id}(id=*{id})}" th:text="*{naam}"></a>
+            <li th:each="brouwer:${brouwers}" th:object="${brouwer}">
+                <a th:href="@{/brouwers/{id}(id=*{id})}" th:text="*{naam + ' (' + adres.gemeente + ')'}"></a>
             </li>
         </ul>
     </body>
