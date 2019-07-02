@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -26,6 +27,11 @@ public class DefaultBrouwerService implements BrouwerService {
     @Override
     public Optional<Brouwer> findById(long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public List<Brouwer> findByIds(Set<Long> ids) {
+        return repository.findByIds(ids);
     }
 
     @Override

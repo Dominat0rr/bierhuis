@@ -2,6 +2,8 @@ package be.vdab.bierhuis.domain;
 
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
@@ -12,7 +14,9 @@ public class Adres {
     private String huisnummer;
     @NotBlank
     private String gemeente;
-    @Range(min = 1000, max = 9999)
+    //@Range(min = 1000, max = 9999)
+    @Min(1000)
+    @Max(9999)
     private int postcode;
 
     public Adres(String straat, String huisnummer, String gemeente, int postcode) {

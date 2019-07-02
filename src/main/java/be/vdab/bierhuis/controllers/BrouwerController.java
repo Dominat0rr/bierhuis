@@ -29,7 +29,7 @@ public class BrouwerController {
         ModelAndView modelAndView = new ModelAndView("brouwer");
         brouwerService.findById(id).ifPresent(brouwer -> {
             modelAndView.addObject(brouwer);
-            modelAndView.addObject("bieren", bierService.findAllByBrouwerId(id));
+            modelAndView.addObject("bieren", bierService.findAllBierenByBrouwerId(id));
         });
         return modelAndView;
     }

@@ -8,10 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class JdbcBierRepository implements BierRepository {
@@ -39,7 +36,7 @@ public class JdbcBierRepository implements BierRepository {
     @Override
     public Optional<Bier> findById(long id) {
         try {
-            String sql = "select id, naam, id, naam, brouwerid, soortid, alcohol, prijs, besteld from bieren where id = ?";
+            String sql = "select id, naam, brouwerid, soortid, alcohol, prijs, besteld from bieren where id = ?";
             return Optional.of(template.queryForObject(sql, bierRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException ex) {
             return Optional.empty();
@@ -47,7 +44,18 @@ public class JdbcBierRepository implements BierRepository {
     }
 
     @Override
-    public List<Bier> findAllByBrouwerId(long id) {
+    public List<Bier> findByIds(Set<Long> ids) {
+        if (ids.isEmpty()) return Collections.emptyList();
+        String sql = "select id, naam, brouwerid, soortid, alcohol, prijs, besteld from bieren where id in (";
+        StringBuilder builder = new StringBuilder((sql));
+        ids.forEach(id -> builder.append("?,"));
+        builder.setCharAt(builder.length() - 1, ')');
+        builder.append(" order by id");
+        return template.query(builder.toString(), ids.toArray(), bierRowMapper);
+    }
+
+    @Override
+    public List<Bier> findAllBierenByBrouwerId(long id) {
         String sql = "select id, naam, brouwerid, soortid, alcohol, prijs, besteld from bieren  where brouwerid = ? order by id";
         return template.query(sql, bierRowMapper, id);
     }
@@ -75,9 +83,9 @@ public class JdbcBierRepository implements BierRepository {
     }
 
     @Override
-    public void updateBesteldAantal(Bier bier) {
-        String sql = "update bieren set besteld = ? where id = ?";
-        if (template.update(sql, bier.getBesteld(), bier.getId()) == 0) {
+    public void updateBesteldAantal(long id, int aantal) {
+        String sql = "update bieren set besteld = besteld +  ? where id = ?";
+        if (template.update(sql, aantal, id) == 0) {
             throw new BierNietGevondenException();
         }
     }
@@ -90,5 +98,12 @@ public class JdbcBierRepository implements BierRepository {
     @Override
     public long findAantalBieren() {
         return template.queryForObject("select count(*) from bieren", Long.class);
+    }
+
+    @Override
+    public void bestelBier(long id, int aantal) {
+//        Optional<Bier> bier = findById(id);
+//        updateBesteldAantal(bier);
+        updateBesteldAantal(id, aantal);
     }
 }

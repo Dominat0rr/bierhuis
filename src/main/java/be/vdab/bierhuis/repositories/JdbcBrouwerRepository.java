@@ -9,10 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class JdbcBrouwerRepository implements BrouwerRepository {
@@ -40,11 +37,22 @@ public class JdbcBrouwerRepository implements BrouwerRepository {
     @Override
     public Optional<Brouwer> findById(long id) {
         try {
-            String sql = "select id, naam, id, naam, straat, huisnr, postcode, gemeente, omzet from brouwers where id = ?";
+            String sql = "select id, naam, straat, huisnr, postcode, gemeente, omzet from brouwers where id = ?";
             return Optional.of(template.queryForObject(sql, brouwerRowMapper, id));
         } catch (IncorrectResultSizeDataAccessException ex) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Brouwer> findByIds(Set<Long> ids) {
+        if (ids.isEmpty()) return Collections.emptyList();
+        String sql = "select id, naam, straat, huisnr, postcode, gemeente, omzet from brouwers where id in (";
+        StringBuilder builder = new StringBuilder((sql));
+        ids.forEach(id -> builder.append("?,"));
+        builder.setCharAt(builder.length() - 1, ')');
+        builder.append(" order by id");
+        return template.query(builder.toString(), ids.toArray(), brouwerRowMapper);
     }
 
     @Override

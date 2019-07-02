@@ -12,6 +12,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +40,16 @@ public class JdbcBrouwerRepositoryTest extends AbstractTransactionalJUnit4Spring
     @Test
     public void findById() {
         assertThat(repository.findById(idVanTestBrouwer()).get().getNaam()).isEqualTo("test");
+    }
+
+    @Test
+    public void findByOnbestaandeId() {
+        assertThat(repository.findById(-1)).isEmpty();
+    }
+
+    @Test
+    public void findByIdsMetLegeVerzamelingIdsMoetLegeVerzamelingBierenTerugGeven() {
+        assertThat(repository.findByIds(Collections.emptySet()).isEmpty());
     }
 
     @Test

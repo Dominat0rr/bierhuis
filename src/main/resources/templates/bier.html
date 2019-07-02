@@ -16,8 +16,14 @@
                 <dt>Prijs</dt>
                 <dd th:text="*{{prijs + ' €'}}"></dd>
             </dl>
-        </div>
 
-        <p>Aantal</p>
+            <form th:object="${bestelForm}"
+                  th:action="@{/bieren/{id}/bestellen(id=${bier.id})}" method="post">
+                <label>Aantal<span th:errors="*{aantal}"></span> <input
+                        th:field="*{aantal}" type='number' autofocus required min="1">
+                </label> <input type="submit" value="Toevoegen">
+            </form>
+            <script th:src="@{/js/preventDoubleSubmit.js}"></script>
+        </div>
     </body>
 </html>

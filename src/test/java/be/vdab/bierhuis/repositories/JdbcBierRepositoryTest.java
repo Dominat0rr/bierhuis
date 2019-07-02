@@ -12,8 +12,11 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
@@ -42,10 +45,25 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     }
 
     @Test
-    public void findAllByBrouwerId() {
-        assertThat(repository.findAllByBrouwerId(1))
+    public void findByOnbestaandeId() {
+        assertThat(repository.findById(-1)).isEmpty();
+    }
+
+    @Test
+    public void findByIdsMetLegeVerzamelingIdsMoetLegeVerzamelingBierenTerugGeven() {
+        assertThat(repository.findByIds(Collections.emptySet()).isEmpty());
+    }
+
+    @Test
+    public void findAllBierenByBrouwerId() {
+        assertThat(repository.findAllBierenByBrouwerId(1))
                 .hasSize(super.countRowsInTable(BIEREN))
                 .extracting(bier -> bier.getId()).isSorted();
+    }
+
+    @Test
+    public void findAllBierenByOnbestaandBrouwerId() {
+        assertThat(repository.findAllBierenByBrouwerId(-1)).isEmpty();
     }
 
     @Test
@@ -66,7 +84,11 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     @Test
     public void updateBesteldAantal() {
-        // TODO
+        long id = idVanTestBier();
+        Bier bier = new Bier(id, "test", 1, 2, 7.4F, BigDecimal.valueOf(22), 1);
+        repository.update(bier);
+        assertThat(super.jdbcTemplate.queryForObject(
+                "select besteld from bieren where id = ?", Long.class, id)).isOne();
     }
 
     @Test
@@ -78,6 +100,14 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     @Test
     public void findAantalBieren() {
-        // TODO:
+        assertThat(super.countRowsInTable(BIEREN)).isEqualTo(repository.findAantalBieren());
+    }
+
+    @Test
+    public void bestelBier() {
+        long id = idVanTestBier();
+        repository.bestelBier(id, 10);
+        assertEquals(10, super.jdbcTemplate
+                .queryForObject("select besteld from bieren where id=" + id, Long.class).longValue());
     }
 }

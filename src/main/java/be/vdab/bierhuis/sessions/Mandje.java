@@ -6,6 +6,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @Component
 @SessionScope
@@ -26,5 +28,13 @@ public class Mandje implements Serializable {
 
     public boolean isGevuld() {
         return ! bieren.isEmpty();
+    }
+
+    public Optional<Integer> getAantal(long id) {
+        return Optional.ofNullable(bieren.get(id));
+    }
+
+    public Set<Long> getIds() {
+        return bieren.keySet();
     }
 }

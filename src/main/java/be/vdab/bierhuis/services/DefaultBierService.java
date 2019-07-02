@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -29,8 +30,13 @@ public class DefaultBierService implements BierService {
     }
 
     @Override
-    public List<Bier> findAllByBrouwerId(long id) {
-        return repository.findAllByBrouwerId(id);
+    public List<Bier> findByIds(Set<Long> ids) {
+        return repository.findByIds(ids);
+    }
+
+    @Override
+    public List<Bier> findAllBierenByBrouwerId(long id) {
+        return repository.findAllBierenByBrouwerId(id);
     }
 
     @Override
@@ -47,8 +53,8 @@ public class DefaultBierService implements BierService {
 
     @Override
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
-    public void updateBesteldAantal(Bier bier) {
-        repository.updateBesteldAantal(bier);
+    public void updateBesteldAantal(long id, int aantal) {
+        repository.updateBesteldAantal(id, aantal);
     }
 
     @Override
@@ -60,5 +66,10 @@ public class DefaultBierService implements BierService {
     @Override
     public long findAantalBieren() {
         return repository.findAantalBieren();
+    }
+
+    @Override
+    public void bestelBier(long id, int aantal) {
+        repository.updateBesteldAantal(id, aantal);
     }
 }

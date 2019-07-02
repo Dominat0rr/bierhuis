@@ -2,6 +2,7 @@ package be.vdab.bierhuis.controllers;
 
 import be.vdab.bierhuis.domain.Bier;
 import be.vdab.bierhuis.services.BierService;
+import be.vdab.bierhuis.sessions.Mandje;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +20,15 @@ public class BierControllerTest {
     private BierController controller;
     @Mock
     private BierService service;
+    @Mock
+    private Mandje mandje;
 
     @Before
     public void before() {
         when(service.findById(1))
                 .thenReturn(Optional.of(new Bier(1, "test", 1,
                         1, 7.4F, BigDecimal.TEN, 10)));
-        controller = new BierController(service);
+        controller = new BierController(service, mandje);
     }
 
     @Test
