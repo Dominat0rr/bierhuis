@@ -102,8 +102,6 @@ public class JdbcBierRepository implements BierRepository {
 
     @Override
     public void bestelBier(long id, int aantal) {
-//        Optional<Bier> bier = findById(id);
-//        updateBesteldAantal(bier);
         updateBesteldAantal(id, aantal);
     }
 }

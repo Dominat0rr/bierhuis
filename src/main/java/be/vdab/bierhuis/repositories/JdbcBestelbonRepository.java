@@ -54,5 +54,6 @@ public class JdbcBestelbonRepository implements BestelbonRepository {
         kolomWaarden.put("aantal", aantal);
         kolomWaarden.put("prijs", prijs);
         insertBestelbonLijn.execute(kolomWaarden);
+        bierService.updateBesteldAantal(bierId, aantal);
     }
 }

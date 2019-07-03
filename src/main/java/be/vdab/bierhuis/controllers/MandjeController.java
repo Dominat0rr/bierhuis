@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -67,21 +68,22 @@ public class MandjeController {
     }
 
     @PostMapping("bestellen")
-    public ModelAndView toevoegen(@Valid BestelbonForm form, Errors errors) {
+    public ModelAndView toevoegen(@Valid BestelbonForm form, Errors errors, RedirectAttributes redirect) {
         if (mandje.isLeeg()) return new ModelAndView("redirect:/");
         if(errors.hasErrors()) return new ModelAndView("mandje", "mandje", mandje);
-        bestelbonService.create(form, mandje);
-        return new ModelAndView("redirect:/mandje");
+        long id = bestelbonService.create(form, mandje);
+        redirect.addAttribute("id", id);
+        return new ModelAndView("redirect:/mandje/besteld/{id}");
     }
-//
-//    @GetMapping("besteld/{id}")
-//    ModelAndView besteld(@PathVariable long id) {
-//        return new ModelAndView("besteld").addObject(mandje);
-//    }
+
+    @GetMapping("besteld/{id}")
+    public ModelAndView besteld(@PathVariable long id) {
+        return new ModelAndView("besteld");
+    }
 
 //    @GetMapping("verwijder")
-//    String verwijder(@RequestParam long id, RedirectAttributes redirect){
-//        mandje.remove(id);
+//    public String verwijder(@RequestParam long id){
+//        mandje.verwijder(id);
 //        return "redirect:/mandje";
 //    }
 }

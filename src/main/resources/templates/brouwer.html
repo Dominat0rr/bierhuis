@@ -5,7 +5,7 @@
 
     <body>
         <nav th:replace="fragments::menu"></nav>
-        <div th:if="${brouwer}==null" class="fout">Brouwer <span th:text="${id}"></span> niet gevonden.</div>
+        <h1 th:if="${brouwer} == null">Brouwer niet gevonden: <span th:text="${id}"></span></h1>
         <h1 th:if="${brouwer} != null" th:text="${brouwer.naam}"></h1>
 
         <ul th:if="${brouwer} != null" class='zebra'>

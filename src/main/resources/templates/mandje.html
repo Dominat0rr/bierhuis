@@ -22,6 +22,12 @@
                     <td th:text="*{key.prijs}"/>
                     <td th:text="*{value}"/>
                     <td th:text="*{key.prijs} * *{value}"/>
+<!--                    <td>-->
+<!--                        <form method="get" th:object="${instance.key}" th:action="@{/mandje/verwijder}">-->
+<!--                            <input th:type="submit" value="verwijder">-->
+<!--                            <input th:type="hidden" th:name="id" th:value="${instance.key.id}">-->
+<!--                        </form>-->
+<!--                    </td>-->
                 </tr>
             </tbody>
 

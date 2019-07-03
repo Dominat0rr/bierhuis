@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments::head(title='Bierhuis | Bestellling Bevestigd')"></head>
+
+    <body>
+        <nav th:replace="fragments::menu"></nav>
+        <h1>Je winkelwagentje is bevestig als bestelbon <strong th:text="${id}"></strong></h1>
+    </body>
+</html>

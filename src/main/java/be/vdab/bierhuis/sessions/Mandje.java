@@ -10,7 +10,7 @@ import java.util.*;
 @SessionScope
 public class Mandje implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final Map<Long, Integer> bieren = new LinkedHashMap<>(); // <id, aantal>
+    private Map<Long, Integer> bieren = new LinkedHashMap<>(); // <id, aantal>
 
     public void voegToe(long id, int aantal) {
         if (this.bevat(id)) {
@@ -45,5 +45,9 @@ public class Mandje implements Serializable {
 
     public Map<Long, Integer> getBieren() {
         return Collections.unmodifiableMap(bieren);
+    }
+
+    public void verwijder(long id) {
+        bieren.remove(id);
     }
 }

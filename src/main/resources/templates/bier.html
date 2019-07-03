@@ -5,8 +5,7 @@
 
     <body>
         <nav th:replace="fragments::menu"></nav>
-        <h1 th:if="${bier} == null">Bier niet gevonden: <span th:text="${id}"></span>
-        </h1>
+        <h1 th:if="${bier} == null">Bier niet gevonden: <span th:text="${id}"></span></h1>
         <div th:if="${bier} != null" th:object="${bier}">
             <h1 th:text="*{naam}"></h1>
             <dl>
