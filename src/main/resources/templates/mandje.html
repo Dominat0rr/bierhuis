@@ -32,7 +32,7 @@
             </tfoot>
         </table>
 
-        <form th:if="${bestelbonform} != null" th:object="${bestelbonform}" th:action="@{/mandje}" method="post">
+        <form th:if="${bestelbonform} != null" th:object="${bestelbonform}" th:action="@{/mandje/bestellen}" method="post">
             <label>Naam<span th:errors="*{naam}"></span><input th:field="*{naam}" autofocus required></label>
             <label>Straat<span th:errors="*{straat}"></span><input th:field="*{straat}" required></label>
             <label>Huisnummer<span th:errors="*{huisnummer}"></span><input th:field="*{huisnummer}" required></label>

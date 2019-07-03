@@ -1,6 +1,5 @@
 package be.vdab.bierhuis.services;
 
-import be.vdab.bierhuis.domain.Bestelbon;
 import be.vdab.bierhuis.forms.BestelbonForm;
 import be.vdab.bierhuis.sessions.Mandje;
 

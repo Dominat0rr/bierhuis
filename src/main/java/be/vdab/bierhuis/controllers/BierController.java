@@ -28,8 +28,6 @@ public class BierController {
     @GetMapping("{id}")
     public ModelAndView bier(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("bier");
-        //bierService.findById(id).ifPresent(bier -> modelAndView.addObject("bier", bier));
-
         bierService.findById(id).ifPresent(bier -> {
             modelAndView.addObject(bier);
             Optional<Integer> optionalAantal = mandje.getAantal(id);

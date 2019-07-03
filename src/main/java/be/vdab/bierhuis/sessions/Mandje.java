@@ -27,6 +27,10 @@ public class Mandje implements Serializable {
         return !bieren.isEmpty();
     }
 
+    public boolean isLeeg() {
+        return bieren.isEmpty();
+    }
+
     public Optional<Integer> getAantal(long id) {
         return Optional.ofNullable(bieren.get(id));
     }

@@ -1,7 +1,5 @@
 package be.vdab.bierhuis.controllers;
 
-import be.vdab.bierhuis.domain.Adres;
-import be.vdab.bierhuis.domain.Bestelbon;
 import be.vdab.bierhuis.domain.Bier;
 import be.vdab.bierhuis.forms.BestelbonForm;
 import be.vdab.bierhuis.services.BestelbonService;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -26,7 +23,6 @@ public class MandjeController {
     private final BierService bierService;
     private final BestelbonService bestelbonService;
     private Map<Bier, Integer> bieren = new HashMap<>();
-    private BigDecimal totaalPrijs = BigDecimal.ZERO;
 
     MandjeController(Mandje mandje, BierService bierService, BestelbonService bestelbonService) {
         this.mandje = mandje;
@@ -54,7 +50,7 @@ public class MandjeController {
         BestelbonForm bestelbonform = new BestelbonForm(null, null, null, null, 0);
         modelAndView.addObject("bestelbonform", bestelbonform);
 
-        if (!mandje.isGevuld()) return modelAndView;
+        if (mandje.isLeeg()) return modelAndView;
         mandje.getBieren().forEach((id, aantal) -> {
             bieren.put(bierService.findById(id).get(), aantal);
         });
@@ -70,19 +66,22 @@ public class MandjeController {
         return "redirect:/mandje";
     }
 
-//    @PostMapping
-//    public ModelAndView bestel(@Valid BestelbonForm bestelbonForm, Errors errors, RedirectAttributes redirect) {
-//        System.out.println(errors);
-//        if (!mandje.isGevuld()) return new ModelAndView("redirect/");
-//        if (errors.hasErrors()) return new ModelAndView("mandje").addObject(mandje);
-//        long id = bestelbonService.create(bestelbonForm, mandje);
-//        mandje.maakLeeg();
-//        redirect.addAttribute("id", id);
-//        return new ModelAndView("redirect:/mandje/besteld/{id}");
-//    }
+    @PostMapping("bestellen")
+    public ModelAndView toevoegen(@Valid BestelbonForm form, Errors errors) {
+        if (mandje.isLeeg()) return new ModelAndView("redirect:/");
+        if(errors.hasErrors()) return new ModelAndView("mandje", "mandje", mandje);
+        bestelbonService.create(form, mandje);
+        return new ModelAndView("redirect:/mandje");
+    }
 //
 //    @GetMapping("besteld/{id}")
 //    ModelAndView besteld(@PathVariable long id) {
 //        return new ModelAndView("besteld").addObject(mandje);
+//    }
+
+//    @GetMapping("verwijder")
+//    String verwijder(@RequestParam long id, RedirectAttributes redirect){
+//        mandje.remove(id);
+//        return "redirect:/mandje";
 //    }
 }
