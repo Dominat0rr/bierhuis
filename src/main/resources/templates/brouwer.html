@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments::head(title = ${brouwer} == null ? 'Brouwer niet gevonden' : ${brouwer.naam})">
+    <head th:replace="fragments::head(title =${brouwer} == null ? 'Brouwer niet gevonden' : 'Bierhuis | ' + ${brouwer.naam})">
     </head>
 
     <body>

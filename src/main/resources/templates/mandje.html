@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments::head(title='Mandje')"></head>
+    <head th:replace="fragments::head(title='Bierhuis | Mandje')"></head>
 
     <body>
         <nav th:replace="fragments::menu"></nav>
         <h1>Mandje</h1>
-        <p>Test</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Bier</th>
+                    <th>Prijs</th>
+                    <th>Aantal</th>
+                    <th>Te betalen</th>
+                </tr>
+            </thead>
+
+            <tbody class='zebra'>
+                <tr th:each="instance : ${bieren}" th:object="${instance}">
+                    <td th:text="*{key.naam}"/>
+                    <td th:text="*{key.prijs}"/>
+                    <td th:text="*{value}"/>
+                    <td th:text="*{key.prijs} * *{value}"/>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="getal" colspan="4">Totaal: <strong th:text="${{totaalPrijs}}"></strong></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <form th:if="${bestelbonform} != null" th:object="${bestelbonform}" th:action="@{/mandje}" method="post">
+            <label>Naam<span th:errors="*{naam}"></span><input th:field="*{naam}" autofocus required></label>
+            <label>Straat<span th:errors="*{straat}"></span><input th:field="*{straat}" required></label>
+            <label>Huisnummer<span th:errors="*{huisnummer}"></span><input th:field="*{huisnummer}" required></label>
+            <label>Postcode<span th:errors="*{postcode}"></span><input th:field="*{postcode}" type="number" required min="1000" max="9999"></label>
+            <label>Gemeente<span th:errors="*{gemeente}"></span><input th:field="*{gemeente}" required></label>
+            <input type="submit" value="Als bestelbon bevestigen"> <input type="hidden" name="id" value="0">
+        </form>
+
+        <script th:src="@{/js/preventDoubleSubmit.js}"></script>
     </body>
 </html>

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments::head(title = ${bier} == null ? 'Bier niet gevonden' : ${bier.naam})">
+    <head th:replace="fragments::head(title = ${bier} == null ? 'Bier niet gevonden' : 'Bierhuis | ' + ${bier.naam})">
     </head>
 
     <body>
         <nav th:replace="fragments::menu"></nav>
-        <h1 th:if="${bier} == null">Snack niet gevonden:
-            <span th:text="${id}"></span>
+        <h1 th:if="${bier} == null">Bier niet gevonden: <span th:text="${id}"></span>
         </h1>
         <div th:if="${bier} != null" th:object="${bier}">
             <h1 th:text="*{naam}"></h1>
@@ -19,8 +18,7 @@
 
             <form th:object="${bestelForm}"
                   th:action="@{/bieren/{id}/bestellen(id=${bier.id})}" method="post">
-                <label>Aantal<span th:errors="*{aantal}"></span> <input
-                        th:field="*{aantal}" type='number' autofocus required min="1">
+                <label>Aantal<span th:errors="*{aantal}"></span> <input th:field="*{aantal}" type='number' autofocus required min="1">
                 </label> <input type="submit" value="Toevoegen">
             </form>
             <script th:src="@{/js/preventDoubleSubmit.js}"></script>

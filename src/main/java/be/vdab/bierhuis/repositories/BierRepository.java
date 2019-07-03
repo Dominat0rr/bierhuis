@@ -2,6 +2,7 @@ package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Bier;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,4 +18,5 @@ public interface BierRepository {
     void delete(long id);
     long findAantalBieren();
     void bestelBier(long id, int aantal);
+    //BigDecimal getPrijsFromId(long id);
 }

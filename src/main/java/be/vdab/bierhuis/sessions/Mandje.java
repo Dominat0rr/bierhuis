@@ -4,10 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @SessionScope
@@ -36,5 +33,13 @@ public class Mandje implements Serializable {
 
     public Set<Long> getIds() {
         return bieren.keySet();
+    }
+
+    public void maakLeeg() {
+        bieren.clear();
+    }
+
+    public Map<Long, Integer> getBieren() {
+        return Collections.unmodifiableMap(bieren);
     }
 }
