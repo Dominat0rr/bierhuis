@@ -71,11 +71,11 @@ public class MandjeController {
     }
 
 //    @PostMapping
-//    ModelAndView bestel(@Valid Bestelbon bestelbon, Errors errors, RedirectAttributes redirect) {
+//    public ModelAndView bestel(@Valid BestelbonForm bestelbonForm, Errors errors, RedirectAttributes redirect) {
 //        System.out.println(errors);
 //        if (!mandje.isGevuld()) return new ModelAndView("redirect/");
 //        if (errors.hasErrors()) return new ModelAndView("mandje").addObject(mandje);
-//        long id = bestelbonService.create(bestelbon, mandje);
+//        long id = bestelbonService.create(bestelbonForm, mandje);
 //        mandje.maakLeeg();
 //        redirect.addAttribute("id", id);
 //        return new ModelAndView("redirect:/mandje/besteld/{id}");
