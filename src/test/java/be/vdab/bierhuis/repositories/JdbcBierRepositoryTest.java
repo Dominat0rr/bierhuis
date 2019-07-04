@@ -13,15 +13,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(JdbcBierRepository.class)
+@Sql("/insertBrouwer.sql")
 @Sql("/insertBieren.sql")
 public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private static final String BIEREN = "bieren";
@@ -30,6 +32,10 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     private long idVanTestBier() {
         return super.jdbcTemplate.queryForObject("select id from bieren where naam = 'test'", Long.class);
+    }
+
+    private long idVanTestBrouwer() {
+        return super.jdbcTemplate.queryForObject("select id from brouwers where naam='test'", Long.class);
     }
 
     @Test
@@ -56,9 +62,13 @@ public class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringCon
 
     @Test
     public void findAllBierenByBrouwerId() {
-        assertThat(repository.findAllBierenByBrouwerId(1))
-                .hasSize(super.countRowsInTable(BIEREN))
-                .extracting(bier -> bier.getId()).isSorted();
+        long idBrouwer = idVanTestBrouwer();
+        List<Bier> bieren = repository.findAllBierenByBrouwerId(idBrouwer);
+        assertEquals(super.countRowsInTableWhere(BIEREN, "brouwerid=" + idBrouwer), bieren.size());
+        bieren.stream().map(bier -> bier.getNaam()).reduce((vorigeNaam, naam) -> {
+            assertTrue(naam.compareToIgnoreCase(vorigeNaam) >= 0);
+            return naam;
+        });
     }
 
     @Test

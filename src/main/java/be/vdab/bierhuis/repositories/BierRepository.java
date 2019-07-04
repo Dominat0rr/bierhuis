@@ -18,5 +18,4 @@ public interface BierRepository {
     void delete(long id);
     long findAantalBieren();
     void bestelBier(long id, int aantal);
-    //BigDecimal getPrijsFromId(long id);
 }
