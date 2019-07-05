@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 public class DefaultBierService implements BierService {

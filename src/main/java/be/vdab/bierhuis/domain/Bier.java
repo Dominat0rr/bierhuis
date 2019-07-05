@@ -6,6 +6,12 @@ import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 public class Bier {
     private long id;
     @NotBlank

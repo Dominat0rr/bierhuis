@@ -14,6 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.Optional;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Controller
 @RequestMapping("bieren")
 public class BierController {

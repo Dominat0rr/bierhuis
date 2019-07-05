@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Repository
 public class JdbcBrouwerRepository implements BrouwerRepository {
     private final JdbcTemplate template;

@@ -17,6 +17,12 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Controller
 @RequestMapping("mandje")
 public class MandjeController {

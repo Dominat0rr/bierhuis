@@ -13,6 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Repository
 public class JdbcBestelbonRepository implements BestelbonRepository {
     private final SimpleJdbcInsert insertBestelbon;
@@ -21,10 +27,10 @@ public class JdbcBestelbonRepository implements BestelbonRepository {
 
     JdbcBestelbonRepository(JdbcTemplate template, BierService bierService) {
         this.insertBestelbon = new SimpleJdbcInsert(template);
-        insertBestelbon.withTableName("bestelbonnen");
+        insertBestelbon.withTableName("bierhuis.bestelbonnen");
         insertBestelbon.usingGeneratedKeyColumns("id");
         this.insertBestelbonLijn = new SimpleJdbcInsert(template);
-        insertBestelbonLijn.withTableName("bestelbonlijnen");
+        insertBestelbonLijn.withTableName("bierhuis.bestelbonlijnen");
         this.bierService = bierService;
     }
 
@@ -50,7 +56,7 @@ public class JdbcBestelbonRepository implements BestelbonRepository {
     private void createBestelbonLijn(long bestelbonId, long bierId, int aantal, BigDecimal prijs) {
         Map<String, Object> kolomWaarden = new HashMap<>();
         kolomWaarden.put("bestelbonid", bestelbonId);
-        kolomWaarden.put("bierId", bierId);
+        kolomWaarden.put("bierid", bierId);
         kolomWaarden.put("aantal", aantal);
         kolomWaarden.put("prijs", prijs);
         insertBestelbonLijn.execute(kolomWaarden);

@@ -16,6 +16,12 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @RunWith(MockitoJUnitRunner.class)
 public class BrouwerControllerTest {
     private BrouwerController controller;

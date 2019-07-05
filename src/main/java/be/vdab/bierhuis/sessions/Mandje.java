@@ -6,6 +6,12 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Component
 @SessionScope
 public class Mandje implements Serializable {

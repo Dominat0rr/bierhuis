@@ -4,6 +4,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 public class BestelbonForm {
     @NotBlank
     private String naam;

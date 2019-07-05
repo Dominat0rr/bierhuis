@@ -4,6 +4,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 public class Brouwer {
     private long id;
     @NotBlank

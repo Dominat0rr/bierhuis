@@ -10,6 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @Repository
 public class JdbcBierRepository implements BierRepository {
     private final JdbcTemplate template;

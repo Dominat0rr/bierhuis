@@ -5,6 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+/**
+ * @version 1.0
+ * @author Dominik Claerman
+ *
+ */
+
 @ControllerAdvice
 public class MyControllerAdvice {
     private final Mandje mandje;
