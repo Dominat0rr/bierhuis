@@ -58,6 +58,7 @@ public class MandjeController {
         modelAndView.addObject("bestelbonform", bestelbonform);
 
         if (mandje.isLeeg()) return modelAndView;
+        bieren.clear();
         mandje.getBieren().forEach((id, aantal) -> {
             bieren.put(bierService.findById(id).get(), aantal);
         });
@@ -87,9 +88,9 @@ public class MandjeController {
         return new ModelAndView("besteld");
     }
 
-//    @GetMapping("verwijder")
-//    public String verwijder(@RequestParam long id){
-//        mandje.verwijder(id);
-//        return "redirect:/mandje";
-//    }
+    @GetMapping("verwijder")
+    public String verwijder(@RequestParam long id){
+        mandje.verwijder(id);
+        return "redirect:/mandje";
+    }
 }
