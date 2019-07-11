@@ -14,8 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @version 1.0
@@ -29,7 +30,7 @@ public class MandjeController {
     private final Mandje mandje;
     private final BierService bierService;
     private final BestelbonService bestelbonService;
-    private Map<Bier, Integer> bieren = new HashMap<>();
+    private Map<Bier, Integer> bieren = new LinkedHashMap<>();
 
     MandjeController(Mandje mandje, BierService bierService, BestelbonService bestelbonService) {
         this.mandje = mandje;
@@ -58,7 +59,7 @@ public class MandjeController {
         modelAndView.addObject("bestelbonform", bestelbonform);
 
         if (mandje.isLeeg()) return modelAndView;
-        bieren.clear();
+        //bieren.clear();
         mandje.getBieren().forEach((id, aantal) -> {
             bieren.put(bierService.findById(id).get(), aantal);
         });
@@ -90,6 +91,8 @@ public class MandjeController {
 
     @GetMapping("verwijder")
     public String verwijder(@RequestParam long id){
+        Optional<Bier> bier = bierService.findById(id);
+        bieren.remove(bier.get());
         mandje.verwijder(id);
         return "redirect:/mandje";
     }
