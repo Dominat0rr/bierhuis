@@ -59,7 +59,7 @@ public class MandjeController {
         modelAndView.addObject("bestelbonform", bestelbonform);
 
         if (mandje.isLeeg()) return modelAndView;
-        //bieren.clear();
+        bieren.clear();
         mandje.getBieren().forEach((id, aantal) -> {
             bieren.put(bierService.findById(id).get(), aantal);
         });

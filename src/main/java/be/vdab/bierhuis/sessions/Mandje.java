@@ -22,7 +22,7 @@ public class Mandje implements Serializable {
         if (this.bevat(id)) {
             bieren.put(id, bieren.get(id) + aantal);
         }
-        bieren.put(id, aantal);
+        else bieren.put(id, aantal);
     }
 
     public boolean bevat(long id) {
